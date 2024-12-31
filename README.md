@@ -16,10 +16,6 @@ This is a simple project created for learning purposes. It builds a social media
 
 ## 🛠 System Design
 
-Here is the architecture design for the project:
-
-![System Architecture Design](#)
-
 The project uses the following tech stack:
 - **Backend**: Python, Django
 - **Frontend**: HTML, CSS, JavaScript
@@ -30,7 +26,7 @@ The project uses the following tech stack:
 
 ## 🎉 Credits
 
-Special thanks to the original creator of this project for providing the inspiration and support!
+Special thanks to the original creator of this project (https://github.com/tomitokko/django-social-media-website）for providing the inspiration and support!
 
 ---
 
