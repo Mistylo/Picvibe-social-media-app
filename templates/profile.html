@@ -1,0 +1,166 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+	<title>Profile - {{user_profile.user.username}}</title>
+    
+    <link rel="stylesheet" href="{% static 'css/main.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/color.css' %}">
+    <link rel="stylesheet" href="{% static 'css/responsive.css' %}">
+
+</head>
+<body>
+<!--<div class="se-pre-con"></div>-->
+<div class="theme-layout">
+	
+	</div>
+	
+	<section>
+			<div class="feature-photo">
+
+				<figure style="width: 100%; height: 300px; overflow: hidden;">
+					<img src="https://i.pinimg.com/474x/e1/7b/2f/e17b2f4a7ae76b422e808449e8ab9d4f.jpg" 
+						 style="width: 100%; height: 100%; object-fit: cover;">
+				</figure>
+				
+				<form action="/follow/" method="POST">
+					{% csrf_token %}
+					<div class="add-btn">
+					{% if user_post_length == 0 %}
+					<span style="color: white; font-size: 15px;"><b>0 Post</b></span>
+					{% elif user_post_length == 1 %}
+					<span style="color: white; font-size: 15px;"><b>1 Post</b></span>
+					{% else %}
+					<span style="color: white; font-size: 15px;"><b>{{user_post_length}} Post</b></span>
+					{% endif %}
+					{% if user_followers == 0 or user_followers == 1%}
+					<span style="color: white; font-size: 15px;"><b>{{user_followers}} follower</b></span>
+					{% else %}
+					<span style="color: white; font-size: 15px;"><b>{{user_followers}} followers</b></span>
+					{% endif %}
+					
+					<span style="color: white; font-size: 15px;"><b>{{user_following}} following</b></span>
+
+					<input type="hidden" value="{{user.username}}" name="follower"/>
+					<input type="hidden" value="{{user_object.username}}" name="user"/>
+
+					<a href="/" data-ripple="" style="margin-right: 15px;">Home</a>
+
+					{% if user_object.username == user.username %}
+					<a href="/settings/" data-ripple="">Settings</a>
+					{% else %}
+					<a data-ripple=""><button type="submit" style="background-color: #ffc0cb; border: #ffc0cb;">{{button_text}}</button></a>
+					{% endif %}
+					
+					</div>
+				</form>
+
+				<div class="container-fluid">
+					<div class="row align-items-start">
+
+						<div class="col-lg-2 col-sm-3">
+							<div class="user-avatar" style="width: 250px; height: 250px; margin-left: 20px;">
+								<figure style="margin: 0; width: 100%; height: 100%;">
+									<img src="{{user_profile.profileimg.url}}" alt="" style="width: 100%; height: 100%; object-fit: cover; border: 1px solid #ddd;">
+								</figure>
+							</div>
+						</div>
+
+						<div class="col-lg-10 col-sm-9">
+							<div class="timeline-info">
+
+								<h5 style="color: black; font-size: 27px; margin-bottom: 10px;">
+									<b>{{user_profile.user.username}}</b>
+								</h5>
+
+								<p style="color: gray; font-size: 16px; margin-top: 0;">
+									{{user_profile.bio}}
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				
+			</div>
+		</section>
+
+	<section>
+		<div class="gap gray-bg">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="row" id="page-contents">
+							<div class="col-lg-12">
+								<div class="timeline-info">
+									<button class="tab-button" onclick="showTab('created')">Created</button>
+									<button class="tab-button" onclick="showTab('saved')">Saved</button>
+								</div>
+							</div>
+	
+							<div class="col-lg-12" id="created-posts">
+								<div class="central-meta">
+									<ul class="photos">
+										{% for post in user_posts %}
+										<li>
+											<a href="{{post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{post.image.url}}" style="height: 250px; width: 300px;" alt="">
+											</a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+	
+							<div class="col-lg-12" id="saved-posts" style="display:none;">
+								<div class="central-meta">
+									<ul class="photos">
+										{% for saved in saved_posts %}
+										<li>
+											<a href="{{saved.post.image.url}}" title="" data-strip-group="mygroup" data-strip-group-options="loop: false">
+												<img src="{{saved.post.image.url}}" style="height: 250px; width: 300px;" alt="">
+											</a>
+										</li>
+										{% endfor %}
+									</ul>
+								</div>
+							</div>
+						</div>	
+					</div>
+				</div>
+			</div>
+		</div>	
+	</section>
+
+	
+	
+	<script data-cfasync="false" src="{% static '../../cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js' %}"></script><script src="{% static 'js/main.min.js' %}"></script>
+	<script src="{% static 'js/script.js' %}"></script>
+
+	<script>
+		function showTab(tab) {
+
+			document.getElementById('created-posts').style.display = 'none';
+			document.getElementById('saved-posts').style.display = 'none';
+
+			if (tab === 'created') {
+				document.getElementById('created-posts').style.display = 'block';
+			} else if (tab === 'saved') {
+				document.getElementById('saved-posts').style.display = 'block';
+			}
+		}
+	</script>
+	
+
+</body>	
+
+
+</html>
